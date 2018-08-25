@@ -14,16 +14,18 @@ You will need MetaMask or another Web3 injecter in order to use the website crea
 
 #### Ganache-Cli or Ganache
 
+You will need ganache to run a local blockchain to run the game on.
+
 ### Instructions
 
 To launch the game is simple. You must first launch Ganache-Cli or Ganache (You might need to change the network port to 8545 in order to use Ganache) and copy the Mneunomics seed and open your MetaMask with the seed in order to access the private block-chain.
 
-Next you have to open a seperate terminal and navigate to the project's root folder (.../crypto-warcraft/). If the files in crypto-warcraft/build/contracts aren't deleted, then delete them for a smooth launch, since it seems to not adapt to the new block-chain when compiling.
+Next you have to open a seperate terminal and navigate to the project's root folder (.../crypto-warcraft/). 
+Once inside the directory use the following command line to compile and migrate the smart contract to the private blockchain.
 
 Once deleted, at the root use the following commands :
 ```
-truffle compile
-truffle migrate
+truffle migrate --reset
 ```
 
 After the migration is done, you can now start the website with :
