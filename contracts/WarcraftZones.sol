@@ -58,7 +58,7 @@ contract WarcraftZones is Warcraft{
       * @param _zoneId The Id of the zone the character will quest in.
       * @return bool : Returns the success of the quest.
       */
-    function questing(uint _charId, uint _zoneId) public onlyCharacterOwner(_charId) isReady(_charId) returns(bool) whenNotPaused() {
+    function questing(uint _charId, uint _zoneId) public onlyCharacterOwner(_charId) isReady(_charId) whenNotPaused() returns(bool){
         Zone memory zone = zones[_zoneId];
         require(characters[_charId].lvl >= zone.lvlRequirement, "The character does not have the level requirement");
         uint rand = uint(keccak256(randNonce++,msg.sender))%100;
@@ -104,7 +104,7 @@ contract WarcraftZones is Warcraft{
       * @param _continent : the quest's continent location.
       * @param _currencyReward : the quest's reward.
       */
-    function addNewZone(string _name, uint _lvlReq, uint _successRate, uint _exp, uint _continent, uint _currencyReward) 
+    function addNewZone(string _name, uint8 _lvlReq, uint8 _successRate, uint64 _exp, uint8 _continent, uint64 _currencyReward) 
     public onlyOwner() checkNameSize(_name){
         require(_successRate <= 100,"The success rate is over 100");
         zones.push(Zone(_name,_lvlReq,_successRate,_exp,_continent,_currencyReward));
