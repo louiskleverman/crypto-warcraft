@@ -18,6 +18,11 @@ You will need ganache to run a local blockchain to run the game on.
 
 ### Instructions
 
+Once you pull the git use the following function to download the dependencies :
+```
+npm install package.json
+```
+
 To launch the game is simple. You must first launch Ganache-Cli or Ganache and copy the Mneunomics seed and open your MetaMask with the seed in order to access the private block-chain. This is so your metamask references the accounts on ganache-cli.
 
 Next you have to open a seperate terminal and navigate to the project's root folder (.../crypto-warcraft/). 
@@ -38,7 +43,11 @@ After the migration is done, you can now start the website with :
 npm run dev
 ```
 
+then you can play !! 
+
 ## How to play ?
+
+When you launch the game you will be the admin, and on the frontend the admin can't play (kind of normal if you ask me).
 
 The game works by having your very own character, and progressing it. In this iteration you are able to quest with your characters which rewards experience in order to level it up, and warcraftCoins.
 You are also able to buy a new randomCharacter with the warcraftCoins.
