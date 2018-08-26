@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-
+    <link rel="icon" type="image/png" href="./images/wowicon.png">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Crypto Warcraft</title>
 
@@ -143,6 +143,24 @@
     <!--Admin page template-->
     <div id="adminPage" class="hide">
         <div class="admin">
+
+          
+          <h3>Game pausable</h3>
+          <p>The game is paused : <span class="ispaused"></span></p>
+          <div class="adminPause row">
+            
+            <div class="col-md-6">
+              <h4>Pause game</h4>
+              <button onclick="App.pauseGame()" class="btn pause button">Pause</button>
+            </div>
+
+            <div class="col-md-6">
+              <h4>Unpause game</h4>
+              <button onclick="App.unpauseGame()" class="btn unpause button">Unpause</button>
+            </div>
+
+          </div>
+
           <h3>Overall Information</h3>
           <div class="adminInfo row">
 

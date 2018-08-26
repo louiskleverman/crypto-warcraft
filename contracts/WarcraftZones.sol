@@ -43,13 +43,16 @@ contract WarcraftZones is Warcraft{
       * @param _charId The character gaining the experience.
       * @param _exp The amount of experience the character is gaining.
       */
-    function getExp(uint _charId,uint _exp) internal whenNotPaused(){
+    function getExp(uint _charId,uint _exp) internal whenNotPaused() onlyUnderMaxLevel(_charId){
         Character storage char = characters[_charId];
         char.exp += _exp;
         if(char.exp >= char.toNextLvl){
-            char.exp -= char.toNextLvl;
-            char.toNextLvl += char.toNextLvl*expRate/100;
             char.lvl++;
+            if(char.lvl == maxLevel)
+                char.exp = 0;
+            else
+                char.exp -= char.toNextLvl;
+            char.toNextLvl += char.toNextLvl*expRate/100;
         }
     }
     
@@ -105,7 +108,7 @@ contract WarcraftZones is Warcraft{
       * @param _currencyReward : the quest's reward.
       */
     function addNewZone(string _name, uint8 _lvlReq, uint8 _successRate, uint64 _exp, uint8 _continent, uint64 _currencyReward) 
-    public onlyOwner() checkNameSize(_name){
+    public onlyOwner() whenPaused() checkNameSize(_name){
         require(_successRate <= 100,"The success rate is over 100");
         zones.push(Zone(_name,_lvlReq,_successRate,_exp,_continent,_currencyReward));
     }

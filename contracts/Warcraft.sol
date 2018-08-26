@@ -26,8 +26,9 @@ contract Warcraft is WarcraftCoin{
      * Special trait
      */
     uint internal dnaSize = 4;
-    uint internal baseExp = 100;
-    uint internal randNonce = 0; 
+    uint public baseExp = 100;
+    uint public maxLevel = 50;
+    uint public randNonce = 0; 
     // next level is expRate% more then previous
     uint internal expRate = 20;
     // the cost in warcraftCoins to buy a new character
@@ -38,16 +39,15 @@ contract Warcraft is WarcraftCoin{
     mapping(uint => address) public characterToOwner;
     mapping(address => uint) public characterCount;
     
-    /** @dev Indicates when quest has been done.
-    * @param _address Address creating the character.
-    * @param _charId Id of the created character.
-    * @param _name name of the created character.
-    * @param _dna dna of the created character.
-    */
     event characterCreated(address _address,uint _charId,string _name,uint _dna);
     
     modifier onlyCharacterOwner(uint _id){
         require(msg.sender == characterToOwner[_id],"You are not the owner of this character");
+        _;
+    }
+
+    modifier onlyUnderMaxLevel(uint _charId){
+        require(characters[_charId].lvl < maxLevel, "The character can't do this because he's max level");
         _;
     }
 
@@ -68,7 +68,7 @@ contract Warcraft is WarcraftCoin{
       * @dev dna passed into function to allow special functions that can create specific characters.
       * @return _id the id of the newly created char.
       */
-    function createCharacter(string _name,uint _dna,bool _faction) internal checkNameSize(_name) returns(uint _id){
+    function createCharacter(string _name,uint _dna,bool _faction) internal checkNameSize(_name) whenNotPaused() returns(uint _id){
         uint dna = _dna;
         if(_faction){
             dna = dna*10 + 1;
@@ -89,7 +89,7 @@ contract Warcraft is WarcraftCoin{
       * @param _faction The faction of the character. Alliance false and Horde true.
       * @return _id the id of the newly created char.
       */
-    function createAccount(string _name,bool _faction) public checkNameSize(_name) returns(uint _id){
+    function createAccount(string _name,bool _faction) public checkNameSize(_name) whenNotPaused() returns(uint _id){
         require(characterCount[msg.sender] == 0,"Not a new account, already got a character to this addresss");
         uint rand = uint(keccak256(_name,msg.sender));
         uint dna = rand % (10**dnaSize);
@@ -103,7 +103,7 @@ contract Warcraft is WarcraftCoin{
       * @return _id the id of the newly created char.
       * @dev It is currently in Ether and will later cost a token amount
       */
-    function createNewRandomCharacter(string _name, bool _faction) public checkNameSize(_name) returns(uint _id){
+    function createNewRandomCharacter(string _name, bool _faction) public checkNameSize(_name) whenNotPaused() returns(uint _id){
         require(characterCount[msg.sender] >= 0,"This account hasn't had his free character yet!");
         require(balanceOf(msg.sender) >= newRandomCharacterCost, "You don't have enough warcraftCoins to purchase");
         
@@ -140,17 +140,25 @@ contract Warcraft is WarcraftCoin{
                 chars[counter++] = i;
             }
         }
-        
         return chars;
     }
 
     /** @dev Change the cost of making a new random character
       * @param _newCost The new cost of the new random character.
       */
-    function changeNewRandomCharacterCost(uint _newCost) public onlyOwner(){
+    function changeNewRandomCharacterCost(uint _newCost) public whenPaused() onlyOwner(){
         //Check for unecissary spending of gas
         require(newRandomCharacterCost != _newCost,"You are trying to set the new cost to what it already was");
         newRandomCharacterCost = _newCost;
+    }
+
+    /** @dev Change the maximum level of a character
+      * @param _newMaxLevel The new maximum level.
+      */
+    function changeMaxLevel(uint8 _newMaxLevel) public whenPaused() onlyOwner(){
+        //Check for unecissary spending of gas
+        require(maxLevel != _newMaxLevel,"You are trying to set the new maxLevel to what it already was");
+        maxLevel = _newMaxLevel;
     }
 
     /** 

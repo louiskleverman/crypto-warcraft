@@ -22,6 +22,8 @@ The selfdestruct design pattern allows the owner of the contract to terminate it
 
 The pausable design pattern allows functions to only be used when the game isn't on pause (practically all the time) that affect the state of the contract that needed to be paused to fix.
 
+It also allows certain changes to the state safely without encountering any TOD's.
+
 ## Implementation idea's
 
 ### Owner can't

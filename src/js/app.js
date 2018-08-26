@@ -207,13 +207,13 @@ App = {
       charInfo.find(".charInfoExpPercent").text(Math.round(res[4]/res[5]*100));
 
       if(res[2] % 10 == 1){
-        charInfo.find(".factionImg").attr("src","../images/hordelogo2.png");
+        charInfo.find(".factionImg").attr("src","./images/hordelogo2.png");
       }
       else{
-        charInfo.find(".factionImg").attr("src","../images/alliancelogo2.png");
+        charInfo.find(".factionImg").attr("src","./images/alliancelogo2.png");
       }     
 
-      $.getJSON("../characters.json",function(json){
+      $.getJSON("characters.json",function(json){
         var faction = getDnaDigit(res[2],1);
         var race = 0;
         var gender = 0;
@@ -224,7 +224,7 @@ App = {
           gender = 1;
         }
         charInfo.find(".charInfoRace").text(json[faction][race][gender].name);
-        charInfo.find(".charImage").attr("src","../images/" + json[faction][race][gender].image);
+        charInfo.find(".charImage").attr("src","./images/" + json[faction][race][gender].image);
       });
 
       App.loadMap();
@@ -431,6 +431,39 @@ App = {
     }).catch(function(err) {  
       console.log(err.message);
     });
+    warcraftInstance.paused.call().then(function(paused){
+      admin.find(".ispaused").text(paused);
+      if(!paused){
+        admin.find(".unpause").prop("disabled",true);
+      }
+      else{
+        admin.find(".pause").prop("disabled",true);
+      }
+    }).catch(function(err){
+      console.log(err.message);
+    });
+
+  },
+
+  pauseGame:function(){
+    warcraftInstance.pause().then(function(){
+      App.informationModal(2, "Game is now paused");
+      $(".admin:eq(0)").find(".unpause").prop("disabled",false);
+      $(".admin:eq(0)").find(".pause").prop("disabled",true);
+    }).catch(function(err){
+      console.log(err.message);
+    });
+  },
+
+  unpauseGame:function(){
+    warcraftInstance.unpause().then(function(){
+      
+      App.informationModal(2, "Game is no longer paused");
+      $(".admin:eq(0)").find(".pause").prop("disabled",false);
+      $(".admin:eq(0)").find(".unpause").prop("disabled",true);
+    }).catch(function(err){
+      console.log(err.message);
+    });
   },
 
   createNewZone:function(){
@@ -455,7 +488,8 @@ App = {
     var newValue = admin.find("#inputNewCharacterCost").val(); 
 
     warcraftInstance.changeNewRandomCharacterCost(newValue,{from: App.account}).then(function(){
-      alert("successfully changed");
+      //alert("successfully changed");
+      App.informationModal(3, "The cost of a new random character is now : " + newValue);
     }).catch(function(err){
       console.log(err.message);
     });
