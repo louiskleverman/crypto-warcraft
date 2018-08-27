@@ -82,6 +82,17 @@
     color:rgb(226, 210, 66);
 }
 
+.characterImage{
+    position:relative;
+}
+.classImage{
+    position:absolute;
+    height:50px;
+    width:auto;
+    bottom:0;
+    left:-5px;
+}
+
 @media screen and (max-width: 991px) {
     
     .displayAccount{

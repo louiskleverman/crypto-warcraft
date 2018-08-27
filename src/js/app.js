@@ -224,6 +224,15 @@ App = {
         }
         charInfo.find(".charInfoRace").text(json[faction][race][gender].name);
         charInfo.find(".charImage").attr("src","./images/" + json[faction][race][gender].image);
+      });   
+
+      $.getJSON("classes.json",function(json){
+        var classes = 0;
+
+        classes = getDnaDigit(res[2],4) ;
+        console.log("dna : "+ res[2] + " class : " + classes);
+        //charInfo.find(".charInfoRace").text(json[classes].name);
+        charInfo.find(".classImage").attr("src","./images/" + json[classes].image);
       });
 
       App.loadMap();
