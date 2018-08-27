@@ -52,13 +52,17 @@
 }
 
 .factionImg{
-    height:120px;
+    height:80px;
     width:auto;
 }
 
 .charImage{
     height:120px;
     width:auto;
+}
+
+.character-part-1{
+    display:inline-block;
 }
 
 .character-part-1,.character-part-2{
@@ -76,4 +80,23 @@
     font-size:40px;
     font-family:liteCraft;
     color:rgb(226, 210, 66);
+}
+
+@media screen and (max-width: 991px) {
+    
+    .displayAccount{
+        padding:10px;
+    }
+    .charInfo{
+        padding:0px;
+    }
+    .charInfoName{
+        font-size:30px;
+    }
+    .character-part-2{
+        float:left;
+    }
+    .factionImg{
+        height:60px;
+    }
 }

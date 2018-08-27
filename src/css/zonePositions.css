@@ -77,3 +77,12 @@
     bottom: 40%;
     right: 44%;
 }
+
+
+
+@media screen and (max-width: 991px) {
+    
+    .zone button{
+        font-size:20px;
+    }
+}
