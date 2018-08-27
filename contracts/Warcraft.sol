@@ -3,7 +3,7 @@ pragma solidity ^0.4.24;
 //import "./Ownable.sol";
 
 import "./EIP20.sol";
-import "./warcraftCoin.sol";
+import "./WarcraftCoin.sol";
 
 contract Warcraft is WarcraftCoin{
 
