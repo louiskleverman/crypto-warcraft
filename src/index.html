@@ -181,14 +181,21 @@
 
           <div class="adminFunctions row">
 
-            <div class="col-md-6">
+            <div class="col-md-4">
               <h4>Change Random Character Cost</h4>
               <p>Current amount : <span class="adminInfo-cost"></span></p>
               <input type="number" id="inputNewCharacterCost" placeholder="New cost"/>
 
               <button class="button" onclick="App.changeRandomCharacterCost()">Modify</button>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
+              <h4>Change Zone Downtime</h4>
+              <p>Current downtime : <span class="adminInfo-downtime"></span></p>
+              <input type="number" id="inputZoneDowntime" placeholder="New zone donwtime"/>
+
+              <button class="button" onclick="App.changeZoneDowntime()">Modify</button>
+            </div>
+            <div class="col-md-4">
               <h4>Add New Zone</h4>
               
               <input type="text" id="inputNewZoneName" placeholder="Zone name"/>
@@ -257,21 +264,21 @@
         </div>
       </div>
 
-      <div class="modal fade" id="questingModal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-              <div class="modal-body">
-    
-                <div class="questingModal">
-                  <img class="questingModal-image"/>
-                  <span class="questingModal-title"></span>
-                  <span class="questingModal-text"></span>
-                </div>
-    
+      <div class="modal fade" id="transactionModal" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+  
+              <div class="transactionModal">
+                <img class="transactionModal-image"/>
+                <span class="transactionModal-title"></span>
+                <span class="transactionModal-text"></span>
               </div>
+  
             </div>
           </div>
         </div>
+      </div>
       
 
   </body>

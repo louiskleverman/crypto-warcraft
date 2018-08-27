@@ -4,7 +4,7 @@ import "./Warcraft.sol";
 contract WarcraftZones is Warcraft{
     
     Zone[] zones;
-    uint zoneDowntime = 60 seconds;
+    uint public zoneDowntime = 60 seconds;
     
     struct Zone{
         string name;
@@ -112,5 +112,12 @@ contract WarcraftZones is Warcraft{
         require(_successRate <= 100,"The success rate is over 100");
         zones.push(Zone(_name,_lvlReq,_successRate,_exp,_continent,_currencyReward));
     }
-    
+
+    /** @dev Changes the zones donwtime (ONLY OWNER)
+      * @param _newZoneDowntime : the  new zone downtime.
+      */
+    function changeZoneDowntime(uint _newZoneDowntime) public onlyOwner() whenPaused(){
+        require(_newZoneDowntime >= 0, "Zone downtime must be over or equal to 0");
+        zoneDowntime = _newZoneDowntime;
+    }
 }

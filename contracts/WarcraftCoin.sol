@@ -11,7 +11,10 @@ contract WarcraftCoin is EIP20,Pausable{
 
     }
     function giveToken(address _to, uint _value) internal whenNotPaused() returns(bool){
-        require(balanceOf(owner) - _value >= 0,"Owner's balance will be < 0 if you continue this operation");
+        require(balanceOf(owner) - _value >= 0 && 
+            balances[_to] + _value >= balances[_to] && 
+            balances[owner] - _value <= balances[owner],
+            "Owner's balance will be < 0 if you continue this operation");
         balances[owner] -= _value;
         balances[_to] += _value;
         emit Transfer(owner, msg.sender, _value); //solhint-disable-line indent, no-unused-vars

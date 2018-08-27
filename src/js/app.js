@@ -84,7 +84,7 @@ App = {
           }).watch(function(error, event) {
             if(App.blockNumber < event.blockNumber) {
               console.log("characterCreation event triggered ", event);
-              
+              $("#transactionModal").modal("hide");
               App.informationModal(3, "You have created your character!");
               App.setLastBlockNumber();
               App.displayAccount();
@@ -134,8 +134,7 @@ App = {
     var name = $("#inputName").val();
     var faction = $("#inputFaction").val();
     warcraftInstance.createAccount(name,parseInt(faction),{from: App.account}).then(function() {
-      //App.setLastBlockNumber();
-      //App.loadPage();
+      App.transactionModal(1,"Creating your character...");
     }).catch(function(err) {
       console.log(err.message);
     });
@@ -282,6 +281,8 @@ App = {
             zoneTemplate.find(".zone").addClass("eastern-kingdom");
             zoneTemplate.find(".zone").addClass("hide");
           }
+          // To be able to specify the zone in CSS ;)
+          zoneTemplate.find(".zone").addClass("zone-"+zone[0]);
 
           questMap.append(zoneTemplate.html());
 
@@ -318,7 +319,7 @@ App = {
       var zoneId = button.value;
       //alert("zone : " + zoneId + " charID : " + character[0]);
       warcraftInstance.questing(App.character[0],zoneId).then(function(res) {
-      
+        App.transactionModal(0,"Currenty questing...");
         
       }).catch(function(err) {
         console.log(err.message);
@@ -335,9 +336,9 @@ App = {
       var faction = $("#buyInputFaction").val();
       var name = $("#buyInputName").val();
       warcraftInstance.createNewRandomCharacter(name,parseInt(faction),{from: App.account}).then(function() {
-        alert("You have created a new character ! ");
         $('#buyNewCharacterModal').modal('hide');
-        App.loadPage();
+        App.transactionModal(1,"Creating character...");
+        //App.loadPage();
       }).catch(function(err) {
         console.log(err.message);
       });
@@ -366,6 +367,22 @@ App = {
     modal.modal('show');
   },
 
+  transactionModal:function(type,info){
+    var modal = $("#transactionModal");
+    modal.find(".transactionModal-text").text("");
+    
+    var image = modal.find(".transactionModal-image");
+    if(type==0){          //questing
+      image.attr("src","./images/wow_battle.jpg");
+      modal.find(".transactionModal-text").text(info);
+    }
+    else{
+      image.attr("src","./images/character-creation.png");
+      modal.find(".transactionModal-text").text(info);
+    }
+    modal.modal('show');
+  },
+
   eventListener:function(){
     console.log("charId : " + App.character[0])
     //
@@ -379,9 +396,11 @@ App = {
         App.setLastBlockNumber();
 
         if(result == true){
+          $("#transactionModal").modal('hide');
           App.informationModal(0);
         }
         else{
+          $("#transactionModal").modal('hide');
           App.informationModal(1);
         }
         App.displayAccount();
@@ -397,6 +416,7 @@ App = {
       if(App.blockNumber < event.blockNumber) {
         console.log("characterCreation event triggered ", event);
         
+        $("#transactionModal").modal('hide');
         App.informationModal(3, "You have created your character!");
         App.setLastBlockNumber();
         App.displayAccount();
@@ -405,12 +425,19 @@ App = {
     });
   },
 
+// -------------- ADMIN ZONE ----------------
+
   displayAdmin:function(){
     $("#results").empty();
     $("#results").append($("#adminPage").html());
     var admin = $(".admin:eq(0)");
     warcraftInstance.balanceOf.call(App.account).then(function(balance){
       admin.find(".adminInfo-tokens").text(balance);
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+    warcraftInstance.zoneDowntime.call().then(function(downtime){
+      admin.find(".adminInfo-downtime").text(downtime);
     }).catch(function(err) {
       console.log(err.message);
     });
@@ -490,6 +517,18 @@ App = {
     warcraftInstance.changeNewRandomCharacterCost(newValue,{from: App.account}).then(function(){
       //alert("successfully changed");
       App.informationModal(3, "The cost of a new random character is now : " + newValue);
+    }).catch(function(err){
+      console.log(err.message);
+    });
+
+  },
+  changeZoneDowntime :function(){
+    var admin = $(".admin:eq(0)");
+    var newValue = admin.find("#inputZoneDowntime").val(); 
+
+    warcraftInstance.changeZoneDowntime(newValue,{from: App.account}).then(function(){
+      //alert("successfully changed");
+      App.informationModal(3, "The zone downtime is now : " + newValue);
     }).catch(function(err){
       console.log(err.message);
     });

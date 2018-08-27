@@ -80,7 +80,7 @@ contract Warcraft is WarcraftCoin{
         characterToOwner[id-1] = msg.sender;
         characterCount[msg.sender]++;
         
-        emit characterCreated(msg.sender,id,_name,dna);
+        emit characterCreated(msg.sender,id-1,_name,dna);
         return id-1;
     } 
     

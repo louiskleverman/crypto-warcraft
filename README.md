@@ -23,7 +23,7 @@ Once you pull the git use the following function to download the dependencies :
 npm install package.json
 ```
 
-To launch the game is simple. You must first launch Ganache-Cli or Ganache and copy the Mneunomics seed and open your MetaMask with the seed in order to access the private block-chain. This is so your metamask references the accounts on ganache-cli.
+To launch the game is simple. You must first launch Ganache-Cli or Ganache and copy the Mnemonics  seed and open your MetaMask with the seed in order to access the private block-chain. This is so your metamask references the accounts on ganache-cli.
 
 Next you have to open a seperate terminal and navigate to the project's root folder (.../crypto-warcraft/). 
 Once inside the directory use the following command line to compile and migrate the smart contract to the private blockchain.

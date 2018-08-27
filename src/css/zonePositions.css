@@ -45,35 +45,35 @@
 .zone:hover .zoneInfo{
    opacity:1;
 }
-.kalimdor:nth-of-type(1){  /*Durotar*/
+.zone-0{  /*Durotar*/
     bottom:42%;
     right:20%;
 }
-.eastern-kingdom:nth-of-type(2){  /*Elwynn forest*/
+.zone-1{  /*Elwynn forest*/
     bottom: 65%;
     right: 51%;
 }
-.kalimdor:nth-of-type(3){  /*Barrens*/
+.zone-2{  /*Barrens*/
     bottom:25%;
     right:40%;
 }
-.eastern-kingdom:nth-of-type(4){ /*Westfall*/
+.zone-3{ /*Westfall*/
     bottom: 47%;
     right: 68%;
 }
-.kalimdor:nth-of-type(5){ /*Stonetalon Mountains*/
+.zone-4{ /*Stonetalon Mountains*/
     bottom: 50%;
     right: 58%;
 }
-.eastern-kingdom:nth-of-type(6){ /*Redridge Mountain*/
+.zone-5{ /*Redridge Mountain*/
     bottom: 64%;
     right: 23%;
 }
-.kalimdor:nth-of-type(7){ /*Ashenvale*/    
+.zone-6{ /*Ashenvale*/    
     bottom: 66%;
     right: 40%;
 }
-.eastern-kingdom:nth-of-type(8){ /*Redridge Mountain*/
+.zone-7{ /*Redridge Mountain*/
     bottom: 40%;
     right: 44%;
 }
